@@ -9,7 +9,7 @@ RUN \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/ \
   && \
-  pip install jira-cli
+  pip install --no-cache-dir jira-cli
 
 ENTRYPOINT [ "jira-cli" ]
 CMD [ "-h" ]
