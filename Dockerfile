@@ -1,15 +1,16 @@
-FROM python:2
+# FROM python:3-slim
+FROM python:3-alpine
 
 RUN \
-  apt-get update && \
-  DEBIAN_FRONTEND=noninteractive \
-    apt-get -y install \
-      vim nano \
-  && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/ \
-  && \
-  pip install --no-cache-dir jira-cli
+  apk update && \
+  apk add -U gcc musl-dev linux-headers openssl-dev libffi-dev && \
+  pip install --no-cache-dir jira-cli && \
+  apk del gcc musl-dev linux-headers openssl-dev libffi-dev
+
+RUN adduser -D -h  /jira jira jira
+USER jira
+
+VOLUME ['/jira/.jira-cli']
 
 ENTRYPOINT [ "jira-cli" ]
 CMD [ "-h" ]
