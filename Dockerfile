@@ -7,8 +7,11 @@ RUN \
   pip install --no-cache-dir jira-cli && \
   apk del gcc musl-dev linux-headers openssl-dev libffi-dev
 
-RUN adduser -D -h  /jira jira jira
+RUN adduser -D -h  /jira jira jira && \
+  mkdir /jira/.jira-cli && \
+  chown -R jira:jira /jira
 USER jira
+
 
 VOLUME ['/jira/.jira-cli']
 
